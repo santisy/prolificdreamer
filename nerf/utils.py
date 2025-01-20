@@ -924,7 +924,7 @@ class Trainer(object):
                     rgb = self.guidance.decode_latents(images)
                 img = rgb.detach().permute(0,2,3,1).cpu().numpy()
                 img = torch.tensor(img.transpose(0,3,1,2), dtype=torch.float32)
-                torchvision.utils.save_image(img, os.path.join(self.workspace, 'validation', f'{self.name}_ep{self.epoch:04d}' + "-unet-albedo.png"), normalize=True, range=(0,1))
+                torchvision.utils.save_image(img, os.path.join(self.workspace, 'validation', f'{self.name}_ep{self.epoch:04d}' + "-unet-albedo.png"), normalize=True, value_range=(0,1))
                 
                 if not self.opt.albedo:
                     with torch.no_grad():
@@ -932,7 +932,7 @@ class Trainer(object):
                         rgb = self.guidance.decode_latents(images)
                     img = rgb.detach().permute(0,2,3,1).cpu().numpy()
                     img = torch.tensor(img.transpose(0,3,1,2), dtype=torch.float32)
-                    torchvision.utils.save_image(img, os.path.join(self.workspace, 'validation', f'{self.name}_ep{self.epoch:04d}' + "-unet-textureless.png"), normalize=True, range=(0,1))
+                    torchvision.utils.save_image(img, os.path.join(self.workspace, 'validation', f'{self.name}_ep{self.epoch:04d}' + "-unet-textureless.png"), normalize=True, value_range=(0,1))
                     
                     if not self.opt.no_lambertian:
                         with torch.no_grad():
@@ -940,7 +940,7 @@ class Trainer(object):
                             rgb = self.guidance.decode_latents(images)
                         img = rgb.detach().permute(0,2,3,1).cpu().numpy()
                         img = torch.tensor(img.transpose(0,3,1,2), dtype=torch.float32)
-                        torchvision.utils.save_image(img, os.path.join(self.workspace, 'validation', f'{self.name}_ep{self.epoch:04d}' + "-unet-lambertian.png"), normalize=True, range=(0,1))
+                        torchvision.utils.save_image(img, os.path.join(self.workspace, 'validation', f'{self.name}_ep{self.epoch:04d}' + "-unet-lambertian.png"), normalize=True, value_range=(0,1))
                             
                 # if self.opt.p_normal > 0:
                 with torch.no_grad():
@@ -948,7 +948,7 @@ class Trainer(object):
                     rgb = self.guidance.decode_latents(images)
                 img = rgb.detach().permute(0,2,3,1).cpu().numpy()
                 img = torch.tensor(img.transpose(0,3,1,2), dtype=torch.float32)
-                torchvision.utils.save_image(img, os.path.join(self.workspace, 'validation', f'{self.name}_ep{self.epoch:04d}' + "-unet-normal.png"), normalize=True, range=(0,1))
+                torchvision.utils.save_image(img, os.path.join(self.workspace, 'validation', f'{self.name}_ep{self.epoch:04d}' + "-unet-normal.png"), normalize=True, value_range=(0,1))
                             
 
                 # poses = self.init_evalpose(valid_loader)
@@ -967,7 +967,7 @@ class Trainer(object):
                         rgb = self.guidance.decode_latents(images)
                     img = rgb.detach().permute(0,2,3,1).cpu().numpy()
                     img = torch.tensor(img.transpose(0,3,1,2), dtype=torch.float32)
-                    torchvision.utils.save_image(img, os.path.join(self.workspace, 'validation', f'{self.name}_ep{self.epoch:04d}' + "-unet-cond.png"), normalize=True, range=(0,1))
+                    torchvision.utils.save_image(img, os.path.join(self.workspace, 'validation', f'{self.name}_ep{self.epoch:04d}' + "-unet-cond.png"), normalize=True, value_range=(0,1))
 
             if self.epoch % self.opt.test_interval == 0:
                 self.save_checkpoint(full=False, best=True)
@@ -1222,7 +1222,7 @@ class Trainer(object):
                 if not (self.opt.backbone == 'particle'):
                     break
             if self.local_rank == 0:
-                torchvision.utils.save_image(pre_imgs.permute(0,3,1,2), os.path.join(self.workspace, 'validation', f'{self.name}_ep{self.epoch:06d}' + "-rgb-"+shading+".png"), nrow=self.opt.val_size, normalize=True, range=(0,1))
+                torchvision.utils.save_image(pre_imgs.permute(0,3,1,2), os.path.join(self.workspace, 'validation', f'{self.name}_ep{self.epoch:06d}' + "-rgb-"+shading+".png"), nrow=self.opt.val_size, normalize=True, value_range=(0,1))
                 if shading == "albedo":
                     torchvision.utils.save_image(pre_depths.unsqueeze(1), os.path.join(self.workspace, 'validation', f'{self.name}_ep{self.epoch:06d}' + "-depth.png"), nrow=self.opt.val_size, normalize=True)
 
